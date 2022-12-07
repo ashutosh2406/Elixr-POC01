@@ -1,9 +1,11 @@
-package org.elixr.filesearch;/* It the child thread which is running in background to call Filesearching class and do the searching operation of file */
+package org.elixr.filesearch;
+/* It the child thread which is running in background to call Filesearching class and do the searching operation of file */
 import java.sql.SQLException;
 import java.util.Scanner;
 
  class SpawnThread extends Thread{
      /* run() of Thread class is overridden here*/
+
     public void run(){
     FileSearching filename = new FileSearching(FileSearchApplication.filepath);
         if (FileSearchApplication.contentOfFile != null) {

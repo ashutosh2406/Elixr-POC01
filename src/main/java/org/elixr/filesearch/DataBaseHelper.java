@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 /* Here I am storing all the user given data and results along with data and time of the operation into database*/
 class DataBaseHelper {
+    /* Brings all the data from FileSearchApplication class*/
    protected DataBaseHelper(String word, String filepath, int totalNoOfWords, String errorMessage) throws SQLException {
         storingDataToDataBase(word, filepath, totalNoOfWords, errorMessage);
     }

@@ -2,13 +2,15 @@ package org.elixr.filesearch;
 
 import java.io.*;
 import java.util.Scanner;
-
-class FileSearching {           ///////////////checking of file avaibility
+/* Checking the file avaibility and storing it in a memory after reading its content */
+class FileSearching {
+  /* Filtering the txt and json file*/
    protected FileSearching(String file)  {
         if(file.endsWith("txt") || file.endsWith("json")){
         FileChecking(file);
         }
     }
+
     private static void FileChecking(String filepath){
         try {
             String sn="";
