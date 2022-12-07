@@ -7,6 +7,7 @@ class FileSearching {           ///////////////checking of file avaibility
         FileChecking(file);
         }
     }
+
     private static void FileChecking(String filepath){
         try {
             String sn="";
@@ -22,5 +23,6 @@ class FileSearching {           ///////////////checking of file avaibility
         catch(Exception e){
             System.out.println(e);
         }
-    }}
+    }
+}
 

@@ -16,6 +16,7 @@ public class FileSearchApplication{
         SpawnThread ch=new SpawnThread();
         ch.run();
     }
+
     /* checking the presence of the searched word and counting its repetation in file and also counting the total no of words in file */
     protected static void wordSearch(String word) throws SQLException {
          String temporaryMemoryForWords=""; int countingNoOfTimesTheWordIsPresent=1,countingNoOfTimesTheWordIsrepetating=0,comparingSearchedWordCharacters=0;;
@@ -63,6 +64,7 @@ public class FileSearchApplication{
             DataBaseHelper db=new DataBaseHelper(word,filepath, totalNoOfWordsInFile,errorMessage);
         }
     }
+
     /* Sending some error message to database if the file path given by the user is invalid */
     protected static void errorToDataBase(String word) throws SQLException {
         String errorMessage="invalid File Path";
