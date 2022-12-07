@@ -19,10 +19,8 @@ import java.util.Scanner;
                 throw new RuntimeException(e);
             }
         }else{
-            try {
                 FileSearchApplication.errorToDataBase(FileSearchApplication.word);
-            } catch (SQLException e) {
-                e.printStackTrace();
+
             }
         }
-}}
+}

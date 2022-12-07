@@ -65,9 +65,9 @@ public class FileSearchApplication{
             DataBaseHelper db=new DataBaseHelper(word,filepath, totalNoOfWordsInFile,errorMessage);
         }
     }
-    
+
     /* Sending some error message to database if the file path given by the user is invalid */
-    protected static void errorToDataBase(String word) throws SQLException {
+    protected static void errorToDataBase(String word)  {
         String errorMessage="invalid File Path";
         System.out.println("The file is not found");
         DataBaseHelper db=new DataBaseHelper(word,filepath,totalNoOfWordsInFile,errorMessage);
