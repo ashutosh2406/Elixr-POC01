@@ -8,9 +8,13 @@ public class FileSearchApplication {
     protected static int totalNoOfWordsInFile;
 
     public static void main(String[] args) {
-        Scanner scannerCommandLineInputForPath = new Scanner(System.in);
-        System.out.println("enter file path");
-        filepath = scannerCommandLineInputForPath.next();
+       try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("enter file path");
+            filepath = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("Processing....");
         SpawnThread ch = new SpawnThread();
         ch.run();
