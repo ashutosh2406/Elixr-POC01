@@ -19,22 +19,19 @@ public class FileSearchApplication {
     /* checking the presence of the searched word and counting its repetation in file and also counting the total no of words in file */
     protected static void wordSearching(String searchedWord) throws SQLException {
         if (contentOfFile.contains(searchedWord)) {
-            String resultToDatabase = "Success";
             System.out.println("got the word");
-            DataBaseHelper db = new DataBaseHelper(word, filepath, resultToDatabase, totalNoOfWordsInFile, "");
+            DataBaseHelper db = new DataBaseHelper(word, filepath, "Success", totalNoOfWordsInFile, "");
         } else {
-            String resultToDatabase = "Error";
             String errorMessage = "Serched word is not present";
-            System.out.println(resultToDatabase);
-            DataBaseHelper db = new DataBaseHelper(word, filepath, resultToDatabase, totalNoOfWordsInFile, "");
+            System.out.println(errorMessage);
+            DataBaseHelper db = new DataBaseHelper(word, filepath, "Error", totalNoOfWordsInFile, "");
         }
     }
 
     /* Sending some error message to database if the file path given by the user is invalid */
     protected static void errorToDataBase(String searchedWord) throws SQLException {
-        String resultToDatabase = "invalid File Path";
-        String errorMessage = resultToDatabase;
-        System.out.println(resultToDatabase);
-        DataBaseHelper db = new DataBaseHelper(word, filepath, resultToDatabase, totalNoOfWordsInFile, errorMessage);
+        String errorMessage = "invalid File Path";
+        System.out.println(errorMessage);
+        DataBaseHelper db = new DataBaseHelper(word, filepath, "invalid File Path", totalNoOfWordsInFile, errorMessage);
     }
 }
