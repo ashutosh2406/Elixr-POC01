@@ -1,5 +1,8 @@
 /*It is the main class where I am taking the filepath as an input from user and checking the presence of seached word*/
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -8,9 +11,13 @@ public class FileSearchApplication {
     protected static int totalNoOfWordsInFile;
 
     public static void main(String[] args) {
-        Scanner scannerCommandLineInputForPath = new Scanner(System.in);
-        System.out.println("enter file path");
-        filepath = scannerCommandLineInputForPath.next();
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("enter file path");
+            filepath = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("Processing....");
         SpawnThread ch = new SpawnThread();
         ch.run();
