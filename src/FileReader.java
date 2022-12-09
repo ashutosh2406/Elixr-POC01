@@ -2,13 +2,14 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
-
-class FileReader {           ///////////////checking of file avaibility
+/* Checking if the file is txt of json and reading the file content */
+class FileReader {          
     protected FileReader(String file) {
         if (file.endsWith("txt") || file.endsWith("json")) {
             FileChecking(file);
         }
     }
+/* reading the file content*/
 
     private static void FileChecking(String filepath) {
         try {
