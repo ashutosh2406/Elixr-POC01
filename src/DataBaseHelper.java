@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 /* Here I am storing all the user given data and results along with data and time of the operation into database*/
 class DataBaseHelper {
@@ -32,7 +33,7 @@ class DataBaseHelper {
         } catch (Exception e) {
             System.out.println(e);
         } finally {
-            connectionToDataBase.close();
+                Objects.requireNonNull(connectionToDataBase).close();
         }
     }
 }
