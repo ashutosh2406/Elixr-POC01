@@ -1,26 +1,30 @@
-import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Scanner;
-/* Checking if the file is txt of json and reading the file content */
-class FileReader {          
-    protected FileReader(String file) {
-        if (file.endsWith("txt") || file.endsWith("json")) {
-            FileChecking(file);
+
+
+class FileReader {
+
+    /* Checking if the file is either txt or json  */
+
+    public static boolean isFileExists(String filepath) {
+        if (filepath.endsWith("txt") || filepath.endsWith("json")) {
+            readingFileContent(filepath);
+            return true;
+        } else {
+            return false;
         }
     }
-/* reading the file content*/
 
-    private static void FileChecking(String filepath) {
+    public static void readingFileContent(String filePath) {
         try {
-            Path readPath = Path.of(filepath);
-            String temporaryMemoryOfFileContent = Files.readString(readPath);
-            FileSearchApplication.contentOfFile = temporaryMemoryOfFileContent;
-            FileSearchApplication.contentOfFile = FileSearchApplication.contentOfFile.replaceAll("[^a-zA-Z]", " ");
-
-        } catch (Exception e) {
-            System.out.println(e);
+            Path filepath = Path.of(filePath);
+            FileSearchApplication.contentOfFile = Files.readAllLines(filepath).get(0);
+            FileSearchApplication.contentOfFile = FileSearchApplication.contentOfFile.replaceAll("[^a-zA-Z0-9]", " ");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
 }
 
