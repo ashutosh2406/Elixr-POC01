@@ -8,7 +8,7 @@ public class FileSearchApplication {
 
 
     public static void main(String[] args) {
-        if(args.length==2) {
+        if (args.length == 2) {
             filepath = args[0];
             searchedWord = args[1];
         }
