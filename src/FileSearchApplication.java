@@ -33,7 +33,6 @@ public class FileSearchApplication {
         DataBaseHelper object = new DataBaseHelper();
         if (repetationOfSearchedWord != 1) {
             System.out.println("got the word, It is  present " + repetationOfSearchedWord + " times inside the file");
-
             object.storingDataToDataBase(FileSearchApplication.searchedWord, filepath, "Success", totalNoOfWordsInFile, "");
         } else {
             String errorMessage = "Serched word is not present";
