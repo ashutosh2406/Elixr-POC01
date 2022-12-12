@@ -8,9 +8,9 @@ class FileReader {
 
     /* Checking if the file is either txt or json  */
 
-    public static boolean isFileExists(String filepath) {
-        if (filepath.endsWith("txt") || filepath.endsWith("json")) {
-            readingFileContent(filepath);
+    public static boolean isFileExists() {
+        if (FileSearchApplication.filepath.endsWith("txt") || FileSearchApplication.filepath.endsWith("json")) {
+            readingFileContent(FileSearchApplication.filepath);
             return true;
         } else {
             return false;
@@ -26,6 +26,5 @@ class FileReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

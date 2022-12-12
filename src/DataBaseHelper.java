@@ -1,35 +1,50 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /* Here I am storing all the user given data and results along with data and time of the operation into database*/
 class DataBaseHelper {
+    String driverClass = "com.mysql.cj.jdbc.Driver";
+    String mySqlUrl = "jdbc:mysql://localhost:3306/elixr1";
+    String userName = "root";
+    String passwordOfDatabase = "Ashu@2406";
+    String dateAndTimeFormat = "yyyy/MM/dd HH:mm:ss";
+    String createTable = "create table audit(PathToTheFile varchar(100),SearchedWord varchar(45),DateAndTimeOfSearch varchar(45),result varchar(45),WordCount int,ErrorMessage varchar(100))";
 
-    protected DataBaseHelper(String word, String filepath, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
-        storingDataToDataBase(word, filepath, resultToDatabase, totalNoOfWords, errorMessage);
+    public void storingDataToDataBase(String searchedWord, String filepath, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
+        Connection connectionToDataBase = null;
+        Statement st = null;
+
+        DateTimeFormatter dateAndTimeFormater = DateTimeFormatter.ofPattern(this.dateAndTimeFormat);
+        LocalDateTime now = LocalDateTime.now();
+        String currentDateAndTime = dateAndTimeFormater.format(now);
+        try {
+            connectionToDataBase = DriverManager.getConnection(this.mySqlUrl, this.userName, this.passwordOfDatabase);
+            st = connectionToDataBase.createStatement();
+            DatabaseMetaData checkIfTableIsThere = connectionToDataBase.getMetaData();
+            ResultSet tables = checkIfTableIsThere.getTables(null, null, "audit", null);
+            if (tables.next()) {
+                st.execute("INSERT INTO audit VALUES ('" + filepath + "','" + searchedWord + "','" + currentDateAndTime + "','" + resultToDatabase + "'," + totalNoOfWords + ",'" + errorMessage + "')");
+            } else {
+                this.createingTable(filepath, searchedWord, currentDateAndTime, resultToDatabase, totalNoOfWords, errorMessage);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Objects.requireNonNull(connectionToDataBase).close();
+        }
     }
 
-    private static void storingDataToDataBase(String word, String filepath, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
+    private void createingTable(String filepath, String searchedWord, String currentDateAndTime, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
         Connection connectionToDataBase = null;
-        String driverClass = "com.mysql.cj.jdbc.Driver";
-        String mySqlUrl = "jdbc:mysql://localhost:3306/elixr1";
-        String userName = "root";
-        String passwordOfDatabase = "Ashu@2406";
-        String dateAndTimeFormat = "yyyy/MM/dd HH:mm:ss";
-
         try {
-            DateTimeFormatter dateAndTimeFormater = DateTimeFormatter.ofPattern(dateAndTimeFormat);
-            LocalDateTime now = LocalDateTime.now();
-            String currentDateAndTime = dateAndTimeFormater.format(now);         //current date and time.
-            Class.forName(driverClass);
-            connectionToDataBase = DriverManager.getConnection(mySqlUrl, userName, passwordOfDatabase);
+            Class.forName(this.driverClass);
+            connectionToDataBase = DriverManager.getConnection(this.mySqlUrl, this.userName, this.passwordOfDatabase);
             Statement st = connectionToDataBase.createStatement();
-            st.execute("create table audit(PathToTheFile varchar(100),SearchedWord varchar(45),DateAndTimeOfSearch varchar(45),result varchar(45),WordCount int,ErrorMessage varchar(100))");
-            st.execute("INSERT INTO audit VALUES ('" + filepath + "','" + word + "','" + currentDateAndTime + "','" + resultToDatabase + "'," + totalNoOfWords + ",'" + errorMessage + "')");
+            st.execute(this.createTable);
+            st.execute("INSERT INTO audit VALUES ('" + filepath + "','" + searchedWord + "','" + currentDateAndTime + "','" + resultToDatabase + "'," + totalNoOfWords + ",'" + errorMessage + "')");
+
         } catch (Exception e) {
             System.out.println(e);
         } finally {
@@ -37,3 +52,4 @@ class DataBaseHelper {
         }
     }
 }
+

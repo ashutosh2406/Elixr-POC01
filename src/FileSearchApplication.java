@@ -1,55 +1,52 @@
 /*It is the main class where I am taking the filepath as an input from user and checking the presence of seached word*/
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class FileSearchApplication {
     protected static String contentOfFile, filepath, searchedWord;
 
 
     public static void main(String[] args) {
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println("enter file path");
-            filepath = reader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        filepath = args[0];
+        searchedWord = args[1];
         System.out.println("Processing....");
-        SpawnThread ch = new SpawnThread();
-        ch.run();
+        SpawnThread childThread = new SpawnThread();
+        childThread.start();
     }
 
     /* checking the presence of the searched word and counting its repetation in file and also counting the total no of words in file */
-    public static void isWordExists(String searchedWord) throws SQLException {
-        ArrayList allWordsOfFile = new ArrayList();
-        int repetationOfWord = 0;
-        String temp = "";
-        for (int i = 0; i < contentOfFile.length(); i++) {
-            char eachCharacterOfFile = contentOfFile.charAt(i);
-            temp = temp + eachCharacterOfFile;
-            if (eachCharacterOfFile == ' ') {
-                allWordsOfFile.add(temp);
-                temp = "";
+    public static void isWordExists() throws SQLException {
+        int repetationOfSearchedWord = 1;
+        int totalNoOfWordsInFile = 0;
+        StringTokenizer t = new StringTokenizer(contentOfFile);
+        String word = "";
+        while (t.hasMoreTokens()) {
+            word = t.nextToken();
+            totalNoOfWordsInFile++;
+            if (word.equals(searchedWord)) {
+                repetationOfSearchedWord++;
             }
         }
-        if (contentOfFile.contains(searchedWord)) {
-            System.out.println("got the word is  present");
-            DataBaseHelper db = new DataBaseHelper(FileSearchApplication.searchedWord, filepath, "Success", allWordsOfFile.size(), "");
+        System.out.println(totalNoOfWordsInFile);
+
+        if (repetationOfSearchedWord != 1) {
+            System.out.println("got the word, It is  present " + repetationOfSearchedWord + " times inside the file");
+            DataBaseHelper object = new DataBaseHelper();
+            object.storingDataToDataBase(FileSearchApplication.searchedWord, filepath, "Success", totalNoOfWordsInFile, "");
         } else {
             String errorMessage = "Serched word is not present";
             System.out.println(errorMessage);
-            DataBaseHelper db = new DataBaseHelper(FileSearchApplication.searchedWord, filepath, "Error", allWordsOfFile.size(), "");
+            DataBaseHelper object = new DataBaseHelper();
+            object.storingDataToDataBase(FileSearchApplication.searchedWord, filepath, "Error", 0, "");
         }
     }
 
     /* Sending some error message to database if the file path given by the user is invalid */
-    public static void errorToDataBase(String searchedWord) throws SQLException {
+    public static void errorToDataBase() throws SQLException {
         String errorMessage = "invalid File Path";
         System.out.println(errorMessage);
-        DataBaseHelper db = new DataBaseHelper(FileSearchApplication.searchedWord, filepath, "invalid File Path", 0, errorMessage);
+        DataBaseHelper object = new DataBaseHelper();
+        object.storingDataToDataBase(FileSearchApplication.searchedWord, filepath, "invalid File Path", 0, errorMessage);
     }
 }
