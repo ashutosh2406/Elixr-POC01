@@ -9,10 +9,14 @@ class FileReader {
     /* Checking if the file is either txt or json  */
 
     public static boolean isFileExists() {
-        if (FileSearchApplication.filepath.endsWith("txt") || FileSearchApplication.filepath.endsWith("json")) {
-            readingFileContent();
-            return true;
-        } else {
+        try {
+            if (FileSearchApplication.filepath.endsWith("txt") || FileSearchApplication.filepath.endsWith("json")) {
+                readingFileContent();
+                return true;
+            } else {
+                return false;
+            }
+        }catch(NullPointerException e){
             return false;
         }
     }

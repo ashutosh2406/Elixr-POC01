@@ -8,8 +8,10 @@ public class FileSearchApplication {
 
 
     public static void main(String[] args) {
-        filepath = args[0];
-        searchedWord = args[1];
+        if(args.length==2) {
+            filepath = args[0];
+            searchedWord = args[1];
+        }
         System.out.println("Processing....");
         SpawnThread childThread = new SpawnThread();
         childThread.start();
