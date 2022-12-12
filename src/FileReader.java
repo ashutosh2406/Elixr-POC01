@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 
 class FileReader {
@@ -18,13 +19,13 @@ class FileReader {
 
     public static void readingFileContent(String filePath) {
         try {
-            Path filepath = Path.of(filePath);
-            FileSearchApplication.contentOfFile = Files.readAllLines(filepath).get(0);
-            FileSearchApplication.contentOfFile = FileSearchApplication.contentOfFile.replaceAll("[^a-zA-Z0-9]", " ");
+            List<String> allLines = Files.readAllLines(Paths.get(FileSearchApplication.filepath));
+            for (String temporaryMemoryToFileContent : allLines) {
+                FileSearchApplication.contentOfFile = temporaryMemoryToFileContent.replaceAll("^a-zA-Z", " ");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
-
 }
-
