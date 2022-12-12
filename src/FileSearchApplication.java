@@ -28,7 +28,6 @@ public class FileSearchApplication {
                 repetationOfSearchedWord++;
             }
         }
-        System.out.println(totalNoOfWordsInFile);
 
         if (repetationOfSearchedWord != 1) {
             System.out.println("got the word, It is  present " + repetationOfSearchedWord + " times inside the file");
