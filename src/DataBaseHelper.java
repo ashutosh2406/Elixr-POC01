@@ -15,7 +15,7 @@ class DataBaseHelper {
 
     private static void storingDataToDataBase(String word, String filepath, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
         Connection connectionToDataBase = null;
-        String driveClass = "com.mysql.cj.jdbc.Driver";
+        String driverClass = "com.mysql.cj.jdbc.Driver";
         String mySqlUrl = "jdbc:mysql://localhost:3306/elixr1";
         String userName = "root";
         String passwordOfDatabase = "Ashu@2406";
@@ -25,7 +25,7 @@ class DataBaseHelper {
             DateTimeFormatter dateAndTimeFormater = DateTimeFormatter.ofPattern(dateAndTimeFormat);
             LocalDateTime now = LocalDateTime.now();
             String currentDateAndTime = dateAndTimeFormater.format(now);         //current date and time.
-            Class.forName(driveClass);
+            Class.forName(driverClass);
             connectionToDataBase = DriverManager.getConnection(mySqlUrl, userName, passwordOfDatabase);
             Statement st = connectionToDataBase.createStatement();
             st.execute("create table audit(PathToTheFile varchar(100),SearchedWord varchar(45),DateAndTimeOfSearch varchar(45),result varchar(45),WordCount int,ErrorMessage varchar(100))");
