@@ -37,7 +37,6 @@ public class FileSearchApplication {
         } else {
             String errorMessage = "Serched word is not present";
             System.out.println(errorMessage);
-            object = new DataBaseHelper();
             object.storingDataToDataBase(FileSearchApplication.searchedWord, filepath, "Error", 0, "");
         }
     }
