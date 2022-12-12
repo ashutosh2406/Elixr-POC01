@@ -16,7 +16,7 @@ class FileReader {
             } else {
                 return false;
             }
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             return false;
         }
     }

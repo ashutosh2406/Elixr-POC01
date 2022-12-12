@@ -30,15 +30,15 @@ public class FileSearchApplication {
                 repetationOfSearchedWord++;
             }
         }
-
+        DataBaseHelper object = new DataBaseHelper();
         if (repetationOfSearchedWord != 1) {
             System.out.println("got the word, It is  present " + repetationOfSearchedWord + " times inside the file");
-            DataBaseHelper object = new DataBaseHelper();
+
             object.storingDataToDataBase(FileSearchApplication.searchedWord, filepath, "Success", totalNoOfWordsInFile, "");
         } else {
             String errorMessage = "Serched word is not present";
             System.out.println(errorMessage);
-            DataBaseHelper object = new DataBaseHelper();
+            object = new DataBaseHelper();
             object.storingDataToDataBase(FileSearchApplication.searchedWord, filepath, "Error", 0, "");
         }
     }
