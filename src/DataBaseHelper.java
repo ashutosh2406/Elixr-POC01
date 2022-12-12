@@ -28,7 +28,7 @@ class DataBaseHelper {
             Class.forName(driveClass);
             connectionToDataBase = DriverManager.getConnection(mySqlUrl, userName, passwordOfDatabase);
             Statement st = connectionToDataBase.createStatement();
-           // st.execute("create table audit(PathToTheFile varchar(100),SearchedWord varchar(45),DateAndTimeOfSearch varchar(45),result varchar(45),WordCount int,ErrorMessage varchar(100))");
+            st.execute("create table audit(PathToTheFile varchar(100),SearchedWord varchar(45),DateAndTimeOfSearch varchar(45),result varchar(45),WordCount int,ErrorMessage varchar(100))");
             st.execute("INSERT INTO audit VALUES ('" + filepath + "','" + word + "','" + currentDateAndTime + "','" + resultToDatabase + "'," + totalNoOfWords + ",'" + errorMessage + "')");
         } catch (Exception e) {
             System.out.println(e);
