@@ -10,9 +10,9 @@ class DataBaseHelper {
     String userName = "root";
     String passwordOfDatabase = "Ashu@2406";
     String dateAndTimeFormat = "yyyy/MM/dd HH:mm:ss";
-    String createTable = "create table audit(PathToTheFile varchar(100),SearchedWord varchar(45),DateAndTimeOfSearch varchar(45),result varchar(45),WordCount int,ErrorMessage varchar(100))";
+    String createTable = "create table audit (PathToTheFile varchar(100), SearchedWord varchar(45), DateAndTimeOfSearch varchar(45), result varchar(45), WordCount int, ErrorMessage varchar(100))";
 
-    public void storingDataToDataBase(String searchedWord, String filepath, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
+    public void storeDataToDataBase(String searchedWord, String filepath, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
         Connection connectionToDataBase = null;
         Statement st = null;
 
@@ -27,7 +27,7 @@ class DataBaseHelper {
             if (tables.next()) {
                 st.execute("INSERT INTO audit VALUES ('" + filepath + "','" + searchedWord + "','" + currentDateAndTime + "','" + resultToDatabase + "'," + totalNoOfWords + ",'" + errorMessage + "')");
             } else {
-                this.createingTable(filepath, searchedWord, currentDateAndTime, resultToDatabase, totalNoOfWords, errorMessage);
+                this.createTable(filepath, searchedWord, currentDateAndTime, resultToDatabase, totalNoOfWords, errorMessage);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -36,7 +36,7 @@ class DataBaseHelper {
         }
     }
 
-    private void createingTable(String filepath, String searchedWord, String currentDateAndTime, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
+    private void createTable(String filepath, String searchedWord, String currentDateAndTime, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
         Connection connectionToDataBase = null;
         try {
             Class.forName(this.driverClass);
