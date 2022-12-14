@@ -59,8 +59,6 @@ class DataBaseHelper {
         } catch (Exception e) {
             e.printStackTrace();
             return connectionToDataBase;
-        } finally {
-            Objects.requireNonNull(connectionToDataBase).close();
         }
     }
 }
