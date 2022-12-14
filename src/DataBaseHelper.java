@@ -20,7 +20,7 @@ class DataBaseHelper {
         String currentDateAndTime = dateAndTimeFormater.format(now);
         try {
             DataBaseHelper object = new DataBaseHelper();
-            connectionToDataBase = object.connectionToDatabase();
+            connectionToDataBase = object.connectionToDataBase();
             st = connectionToDataBase.createStatement();
             DatabaseMetaData checkIfTableIsThere = connectionToDataBase.getMetaData();
             ResultSet tables = checkIfTableIsThere.getTables(null, null, "audit", null);
@@ -37,7 +37,7 @@ class DataBaseHelper {
     }
 
     private void createTable(String filepath, String searchedWord, String currentDateAndTime, String resultToDatabase, int totalNoOfWords, String errorMessage) throws SQLException {
-        Connection connectionToDatabase = connectionToDatabase();
+        Connection connectionToDatabase = connectionToDataBase();
         try {
             Statement st = connectionToDatabase.createStatement();
             st.execute(this.createTable);
@@ -50,7 +50,7 @@ class DataBaseHelper {
         }
     }
 
-    private Connection connectionToDatabase() throws SQLException {
+    private Connection connectionToDataBase() throws SQLException {
         Connection connectionToDataBase = null;
         try {
             Class.forName(this.driverClass);
