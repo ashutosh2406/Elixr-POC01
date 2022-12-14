@@ -27,7 +27,6 @@ public class FileSearchApplication {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /* checking the presence of the searched word and counting its repetation in file  */
