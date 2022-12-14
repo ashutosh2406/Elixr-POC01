@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,7 +18,10 @@ class FileReader extends Thread {
     public void start() {
         try {
             if (this.filepath.endsWith("txt") || this.filepath.endsWith("json")) {
+                File checkFileAvaibility=new File(this.filepath);
+                if(checkFileAvaibility.exists()){
                 readFileContent(filepath);
+                }
             }
         } catch (NullPointerException e) {
             System.out.println("Check the path Properly");
