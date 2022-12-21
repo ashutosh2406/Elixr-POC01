@@ -1,53 +1,39 @@
 /*It is the main class where I am taking the filepath as an input from user and checking the presence of seached word*/
 
 import java.sql.SQLException;
-import java.util.StringTokenizer;
 
-public class FileSearchApplication {
+public class FileSearchApplication implements Runnable  {
+    protected static String filepath = null;
+    protected static String searchedWord = null;
+    public static FileSearchApplication o1;
 
-    public static void main(String[] args) {
-        String filepath = null;
-        String searchedWord = null;
+  synchronized  public static void main(String[] args) {
+
         if (args.length == 2) {
             filepath = args[0];
             searchedWord = args[1];
         }
         System.out.println("Processing....");
-        FileReader childThread = new FileReader(filepath);
-        childThread.start();
-        FileSearchApplication object = new FileSearchApplication();
-        try {
-            if (childThread.contentOfFile != null) {
-                System.out.println("got the file");
-                object.isWordExists(filepath, searchedWord, childThread.contentOfFile);
-            } else {
-                DataBaseHelper databasehelperObj = new DataBaseHelper();
-                databasehelperObj.storeDataToDataBase(searchedWord, filepath, "Error", 0, "The file is empty");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Thread startChildThread = new Thread(new FileReader());
+        startChildThread.start();
     }
-
-    /* checking the presence of the searched word and counting its repetation in file  */
-    public void isWordExists(String filepath, String searchedWord, String contentOfFile) throws SQLException {
-        int repetationOfSearchedWord = 1;
-        StringTokenizer t = new StringTokenizer(contentOfFile);
-        String word = "";
-        while (t.hasMoreTokens()) {
-            word = t.nextToken();
-            if (word.equals(searchedWord)) {
-                repetationOfSearchedWord++;
+    public  void run() {
+       DataBaseHelper databaseObject = new DataBaseHelper();
+        if (FileReader.repetitionOfSearchedWord != 1) {
+            System.out.println("got the word, It is  present " + FileReader.repetitionOfSearchedWord + " times inside the file");
+            try {
+                databaseObject.storeDataToDataBase(searchedWord, filepath, "Success", FileReader.repetitionOfSearchedWord, "");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        }
-        DataBaseHelper object = new DataBaseHelper();
-        if (repetationOfSearchedWord != 1) {
-            System.out.println("got the word, It is  present " + repetationOfSearchedWord + " times inside the file");
-            object.storeDataToDataBase(searchedWord, filepath, "Success", repetationOfSearchedWord, "");
         } else {
-            String errorMessage = "Serched word is not present";
+            String errorMessage = "Searched word is not present";
             System.out.println(errorMessage);
-            object.storeDataToDataBase(searchedWord, filepath, "Error", 0, "");
+            try {
+                databaseObject.storeDataToDataBase(searchedWord, filepath, "Error", 0, "");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
