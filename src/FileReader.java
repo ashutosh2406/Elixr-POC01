@@ -13,8 +13,8 @@ class FileReader implements Runnable {
     protected String searchedWord;
 
     /* Checking if the file is either txt or json  */
-   synchronized public void run() {
-       this.filepath = FileSearchApplication.filepath;
+    synchronized public void run() {
+        this.filepath = FileSearchApplication.filepath;
         this.searchedWord = FileSearchApplication.searchedWord;
         if (this.filepath.endsWith("txt") || this.filepath.endsWith("json")) {
             File checkFileAvailability = new File(this.filepath);
@@ -32,7 +32,7 @@ class FileReader implements Runnable {
     }
 
 
-  synchronized   public void readFileContent(File filepath) {
+    synchronized public void readFileContent(File filepath) {
 
         try {
             List<String> allLines = Files.readAllLines(filepath.toPath());
@@ -55,7 +55,7 @@ class FileReader implements Runnable {
         }
     }
 
-  synchronized   public void isWordExists() throws SQLException {
+    synchronized public void isWordExists() throws SQLException {
         StringTokenizer t = new StringTokenizer(contentOfFile);
         String word = "";
         while (t.hasMoreTokens()) {
@@ -65,7 +65,7 @@ class FileReader implements Runnable {
             }
         }
 
-     Thread anotherThread=new Thread(new FileSearchApplication());
+        Thread anotherThread = new Thread(new FileSearchApplication());
         anotherThread.start();
     }
 

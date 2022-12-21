@@ -2,12 +2,12 @@
 
 import java.sql.SQLException;
 
-public class FileSearchApplication implements Runnable  {
+public class FileSearchApplication implements Runnable {
+    public static FileSearchApplication o1;
     protected static String filepath = null;
     protected static String searchedWord = null;
-    public static FileSearchApplication o1;
 
-  synchronized  public static void main(String[] args) {
+    synchronized public static void main(String[] args) {
 
         if (args.length == 2) {
             filepath = args[0];
@@ -17,8 +17,9 @@ public class FileSearchApplication implements Runnable  {
         Thread startChildThread = new Thread(new FileReader());
         startChildThread.start();
     }
-    public  void run() {
-       DataBaseHelper databaseObject = new DataBaseHelper();
+
+    public void run() {
+        DataBaseHelper databaseObject = new DataBaseHelper();
         if (FileReader.repetitionOfSearchedWord != 1) {
             System.out.println("got the word, It is  present " + FileReader.repetitionOfSearchedWord + " times inside the file");
             try {
