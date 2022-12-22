@@ -4,18 +4,30 @@ import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.concurrent.Callable;
 
 
-class FileReader implements Runnable {
-    protected static int repetitionOfSearchedWord = 1;
-    protected String contentOfFile = null;
-    protected String filepath = null;
-    protected String searchedWord;
+class FileReader implements Callable<Integer> {
+    private final String searchedWord;
+    private final String filepath;
+    private int repetitionOfSearchedWord = 0;
+    private String contentOfFile;
+
+    FileReader(String filepath, String searchedWord) {
+        this.filepath = filepath;
+        this.searchedWord = searchedWord;
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        validateFilePath();
+
+        return repetitionOfSearchedWord;
+    }
+
 
     /* Checking if the file is either txt or json  */
-    synchronized public void run() {
-        this.filepath = FileSearchApplication.filepath;
-        this.searchedWord = FileSearchApplication.searchedWord;
+    public void validateFilePath() {
         if (this.filepath.endsWith("txt") || this.filepath.endsWith("json")) {
             File checkFileAvailability = new File(this.filepath);
             if (checkFileAvailability.exists()) {
@@ -32,7 +44,7 @@ class FileReader implements Runnable {
     }
 
 
-    synchronized public void readFileContent(File filepath) {
+    public void readFileContent(File filepath) {
 
         try {
             List<String> allLines = Files.readAllLines(filepath.toPath());
@@ -55,7 +67,7 @@ class FileReader implements Runnable {
         }
     }
 
-    synchronized public void isWordExists() throws SQLException {
+    public void isWordExists() throws SQLException {
         StringTokenizer t = new StringTokenizer(contentOfFile);
         String word = "";
         while (t.hasMoreTokens()) {
@@ -64,9 +76,7 @@ class FileReader implements Runnable {
                 repetitionOfSearchedWord++;
             }
         }
-
-        Thread anotherThread = new Thread(new FileSearchApplication());
-        anotherThread.start();
     }
-
 }
+
+

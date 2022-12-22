@@ -1,29 +1,39 @@
 /*It is the main class where I am taking the filepath as an input from user and checking the presence of seached word*/
 
 import java.sql.SQLException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-public class FileSearchApplication implements Runnable {
-    public static FileSearchApplication o1;
-    protected static String filepath = null;
-    protected static String searchedWord = null;
+public class FileSearchApplication {
 
     synchronized public static void main(String[] args) {
-
+        String filepath = null;
+        String searchedWord = null;
         if (args.length == 2) {
             filepath = args[0];
             searchedWord = args[1];
         }
         System.out.println("Processing....");
-        Thread startChildThread = new Thread(new FileReader());
-        startChildThread.start();
+        ExecutorService executableThreadPool = Executors.newFixedThreadPool(1);
+        Future<Integer> welcomeChildThread = executableThreadPool.submit(new FileReader(filepath, searchedWord));
+        int repetitionOfSearchedWord = 0;
+        try {
+            repetitionOfSearchedWord = welcomeChildThread.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+        displayResults(filepath,searchedWord,repetitionOfSearchedWord);
+        executableThreadPool.close();
+        System.out.println("main completed");
     }
-
-    public void run() {
+       public static void displayResults(String filepath,String searchedWord, int repetitionOfSearchedWord){
         DataBaseHelper databaseObject = new DataBaseHelper();
-        if (FileReader.repetitionOfSearchedWord != 1) {
-            System.out.println("got the word, It is  present " + FileReader.repetitionOfSearchedWord + " times inside the file");
+        if (repetitionOfSearchedWord != 0) {
+            System.out.println("got the word, It is  present " + repetitionOfSearchedWord + " times inside the file");
             try {
-                databaseObject.storeDataToDataBase(searchedWord, filepath, "Success", FileReader.repetitionOfSearchedWord, "");
+                databaseObject.storeDataToDataBase(searchedWord, filepath, "Success", repetitionOfSearchedWord, "");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
