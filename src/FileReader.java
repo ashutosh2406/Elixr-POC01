@@ -28,7 +28,7 @@ class FileReader implements Callable<Integer> {
 
     /* Checking if the file is either txt or json  */
     public void validateFilePath() {
-        if (this.filepath.endsWith("txt") || this.filepath.endsWith("json")) {
+        if (this.filepath.endsWith(Constants.TXT_EXTENSION) || this.filepath.endsWith(Constants.JSON_EXTENSION)) {
             File checkFileAvailability = new File(this.filepath);
             if (checkFileAvailability.exists()) {
                 readFileContent(checkFileAvailability);
