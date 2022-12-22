@@ -1,4 +1,5 @@
 public class Constants {
+    public static final int TOTAL_NO_OF_ARGUMENTS = 2;
     public static final String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
     public static final String MYSQL_URL = "jdbc:mysql://localhost:3306/elixr1";
     public static final String USERNAME = "root";

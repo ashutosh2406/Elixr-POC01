@@ -11,7 +11,7 @@ public class FileSearchApplication {
     synchronized public static void main(String[] args) {
         String filepath = null;
         String searchedWord = null;
-        if (args.length == 2) {
+        if (args.length == Constants.TOTAL_NO_OF_ARGUMENTS) {
             filepath = args[0];
             searchedWord = args[1];
         }
@@ -24,11 +24,12 @@ public class FileSearchApplication {
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
-        displayResults(filepath,searchedWord,repetitionOfSearchedWord);
+        displayResults(filepath, searchedWord, repetitionOfSearchedWord);
         executableThreadPool.close();
         System.out.println("main completed");
     }
-       public static void displayResults(String filepath,String searchedWord, int repetitionOfSearchedWord){
+
+    public static void displayResults(String filepath, String searchedWord, int repetitionOfSearchedWord) {
         DataBaseHelper databaseObject = new DataBaseHelper();
         if (repetitionOfSearchedWord != 0) {
             System.out.println("got the word, It is  present " + repetitionOfSearchedWord + " times inside the file");
