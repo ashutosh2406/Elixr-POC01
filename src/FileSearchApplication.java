@@ -30,30 +30,31 @@ public class FileSearchApplication {
     }
 
     public static void displayResults(String filepath, String searchedWord, int repetitionOfSearchedWord) {
-        DataBaseHelper databaseObject = new DataBaseHelper();
-        if (repetitionOfSearchedWord != 0) {
-            System.out.println("got the word, It is  present " + repetitionOfSearchedWord + " times inside the file");
-            try {
+        try {
+            DataBaseHelper databaseObject = new DataBaseHelper();
+            if (repetitionOfSearchedWord != 0) {
+                System.out.println("got the word, It is  present " + repetitionOfSearchedWord + " times inside the file");
                 databaseObject.storeDataToDataBase(searchedWord, filepath, "Success", repetitionOfSearchedWord, "");
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            String errorMessage = "Searched word is not present";
-            System.out.println(errorMessage);
-            try {
+            } else {
+                String errorMessage = "Searched word is not present";
+                System.out.println(errorMessage);
                 databaseObject.storeDataToDataBase(searchedWord, filepath, "Error", 0, "");
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     /* Sending some error message to database if the file path given by the user is invalid */
     public void errorToDataBase(String filepath, String searchedWord, String contentOfFile) throws SQLException {
-        String errorMessage = "invalid File Path";
-        System.out.println(errorMessage);
-        DataBaseHelper object = new DataBaseHelper();
-        object.storeDataToDataBase(searchedWord, filepath, "invalid File Path", 0, errorMessage);
+        try {
+            String errorMessage = "invalid File Path";
+            System.out.println(errorMessage);
+            DataBaseHelper object = new DataBaseHelper();
+            object.storeDataToDataBase(searchedWord, filepath, "invalid File Path", 0, errorMessage);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
