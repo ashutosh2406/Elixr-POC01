@@ -19,7 +19,7 @@ class DataBaseHelper {
             DatabaseMetaData checkIfTableIsThere = connectionToDataBase.getMetaData();
             ResultSet tables = checkIfTableIsThere.getTables(null, null, "audit", null);
             if (tables.next()) {
-                String query = MessageFormat.format("INSERT INTO "+Constants.TABLE_NAME+" VALUES({0},{1},{2},{3},{4},{5})", "'" + filepath + "'", "'" + searchedWord + "'", "'" + currentDateAndTime + "'", "'" + resultToDatabase + "'", "'" + totalOccuranceOfWord + "'", "'" + errorMessage + "'");
+                String query = MessageFormat.format("INSERT INTO " + Constants.TABLE_NAME + " VALUES({0},{1},{2},{3},{4},{5})", "'" + filepath + "'", "'" + searchedWord + "'", "'" + currentDateAndTime + "'", "'" + resultToDatabase + "'", "'" + totalOccuranceOfWord + "'", "'" + errorMessage + "'");
                 st.execute(query);
             } else {
                 this.createTable(filepath, searchedWord, currentDateAndTime, resultToDatabase, totalOccuranceOfWord, errorMessage);
@@ -36,7 +36,7 @@ class DataBaseHelper {
         try {
             Statement st = connectionToDatabase.createStatement();
             st.execute(Constants.QUERY_TO_CREATE_TABLE);
-            String query = MessageFormat.format("INSERT INTO "+Constants.TABLE_NAME+" VALUES({0},{1},{2},{3},{4},{5})", "'" + filepath + "'", "'" + searchedWord + "'", "'" + currentDateAndTime + "'", "'" + resultToDatabase + "'", "'" + totalOccuranceOfWord + "'", "'" + errorMessage + "'");
+            String query = MessageFormat.format("INSERT INTO " + Constants.TABLE_NAME + " VALUES({0},{1},{2},{3},{4},{5})", "'" + filepath + "'", "'" + searchedWord + "'", "'" + currentDateAndTime + "'", "'" + resultToDatabase + "'", "'" + totalOccuranceOfWord + "'", "'" + errorMessage + "'");
             st.execute(query);
         } catch (Exception e) {
             System.out.println(e);

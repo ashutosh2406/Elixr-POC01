@@ -61,7 +61,7 @@ class FileReader implements Callable<Integer> {
             } else {
                 System.out.println(Constants.IF_FILE_IS_EMPTY);
                 DataBaseHelper databaseHelperObject = new DataBaseHelper();
-                databaseHelperObject.storeDataToDataBase(searchedWord, this.filepath, Constants.IF_ANY_ERROR_FOUND, 0,Constants.IF_FILE_IS_EMPTY);
+                databaseHelperObject.storeDataToDataBase(searchedWord, this.filepath, Constants.IF_ANY_ERROR_FOUND, 0, Constants.IF_FILE_IS_EMPTY);
             }
         } catch (Exception e) {
             e.printStackTrace();
