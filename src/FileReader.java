@@ -49,7 +49,7 @@ class FileReader implements Callable<Integer> {
         try {
             List<String> allLines = Files.readAllLines(filepath.toPath());
             for (String temporaryMemoryToFileContent : allLines) {
-                contentOfFile = temporaryMemoryToFileContent.replaceAll("^a-zA-Z", " ");
+                contentOfFile = temporaryMemoryToFileContent;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,8 +59,9 @@ class FileReader implements Callable<Integer> {
                 System.out.println("got the file");
                 isWordExists();
             } else {
-                DataBaseHelper databasehelperObj = new DataBaseHelper();
-                databasehelperObj.storeDataToDataBase(searchedWord, this.filepath, "Error", 0, "The file is empty");
+                System.out.println(Constants.IF_FILE_IS_EMPTY);
+                DataBaseHelper databaseHelperObject = new DataBaseHelper();
+                databaseHelperObject.storeDataToDataBase(searchedWord, this.filepath, Constants.IF_ANY_ERROR_FOUND, 0,Constants.IF_FILE_IS_EMPTY);
             }
         } catch (Exception e) {
             e.printStackTrace();
