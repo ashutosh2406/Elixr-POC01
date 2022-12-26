@@ -10,9 +10,9 @@ class DataBaseHelper {
     public void storeDataToDataBase(String searchedWord, String filepath, String resultToDatabase, int totalOccuranceOfWord, String errorMessage) throws SQLException {
         Connection connectionToDataBase = null;
         Statement st = null;
-        DateTimeFormatter dateAndTimeFormater = DateTimeFormatter.ofPattern(Constants.DATE_AND_TIME_FORMAT);
+        DateTimeFormatter dateAndTimeFormatter = DateTimeFormatter.ofPattern(Constants.DATE_AND_TIME_FORMAT);
         LocalDateTime now = LocalDateTime.now();
-        String currentDateAndTime = dateAndTimeFormater.format(now);
+        String currentDateAndTime = dateAndTimeFormatter.format(now);
         try {
             connectionToDataBase = this.connectionToDataBase();
             st = connectionToDataBase.createStatement();
